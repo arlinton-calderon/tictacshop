@@ -1,6 +1,8 @@
+# Django
 from django.contrib import admin
 
-from .models import Brand, Category, Product, ProductImage
+# Models
+from tictacshop.products.models import Brand, Category, Product, ProductImage
 
 
 class BaseSimpleAdmin(admin.ModelAdmin):
@@ -34,7 +36,7 @@ class ProductImageAdmin(admin.ModelAdmin):
         'product__categories__name',
         'image'
     )
-    
+
     readonly_fields = ('created', 'modified')
 
 

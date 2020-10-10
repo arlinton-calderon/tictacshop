@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class ProductsConfig(AppConfig):
-    name = 'products'
+class ProductsAppConfig(AppConfig):
+    name = 'tictacshop.products'
     verbose_name = 'Productos'

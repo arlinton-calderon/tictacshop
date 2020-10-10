@@ -40,7 +40,8 @@ DJANGO_APPS = [
 ]
 
 LOCAL_APPS = [
-    'products'
+    'tictacshop.products.apps.ProductsAppConfig',
+    'tictacshop.users.apps.UsersAppConfig',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS
@@ -55,7 +56,15 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'tictacshop.urls'
+# URLs
+ROOT_URLCONF = 'config.urls'
+
+# WSGI
+WSGI_APPLICATION = 'config.wsgi.application'
+
+# Users & Authentication
+AUTH_USER_MODEL = 'users.CustomUser'
+
 
 TEMPLATES = [
     {
@@ -72,8 +81,6 @@ TEMPLATES = [
         },
     },
 ]
-
-WSGI_APPLICATION = 'tictacshop.wsgi.application'
 
 
 # Database
@@ -131,6 +138,18 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+]
 
 MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_URL = '/media/'
+
+
+# Admin
+ADMIN_URL = 'admin/'
+ADMINS = [
+    ('Arlinton Calderón', 'arlinton_calderon23171@elpoli.edu.co'),
+]
+MANAGERS = ADMINS

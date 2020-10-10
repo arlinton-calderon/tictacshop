@@ -1,15 +1,12 @@
+"""Product models."""
+
 from django.db import models
 
 
-class BaseDateModel(models.Model):
-    created = models.DateTimeField(auto_now_add=True, verbose_name='Creado')
-    modified = models.DateTimeField(auto_now=True, verbose_name='Modificado')
-
-    class Meta:
-        abstract = True
+from tictacshop.utils.models import AbstractBaseModel
 
 
-class BaseNameModel(BaseDateModel):
+class AbstractNameModel(AbstractBaseModel):
     name = models.CharField(
         max_length=256,
         unique=True,
@@ -17,28 +14,28 @@ class BaseNameModel(BaseDateModel):
         verbose_name='Nombre'
     )
 
-    class Meta:
+    class Meta(AbstractBaseModel.Meta):
         abstract = True
 
     def __str__(self):
         return self.name
 
 
-class Brand(BaseNameModel):
-    class Meta(BaseNameModel.Meta):
+class Brand(AbstractNameModel):
+    class Meta(AbstractNameModel.Meta):
         verbose_name = 'marca'
         verbose_name_plural = 'marcas'
         ordering = ['name']
 
 
-class Category(BaseNameModel):
-    class Meta(BaseNameModel.Meta):
+class Category(AbstractNameModel):
+    class Meta(AbstractNameModel.Meta):
         verbose_name = 'categoria'
         verbose_name_plural = 'categorias'
         ordering = ['name']
 
 
-class Product(BaseNameModel):
+class Product(AbstractNameModel):
     brand = models.ForeignKey(
         Brand,
         on_delete=models.PROTECT,
@@ -74,7 +71,7 @@ class Product(BaseNameModel):
         return f'{self.brand.name} - {self.name}'
 
 
-class ProductImage(BaseDateModel):
+class ProductImage(AbstractBaseModel):
     image = models.ImageField(
         upload_to='products/images/%Y/%m/%d',
         blank=True,
