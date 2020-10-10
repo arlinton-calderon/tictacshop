@@ -37,7 +37,7 @@ class CustomUserAdmin(UserAdmin):
         (_('Important dates'), {
             'fields': (
                 'date_joined',
-                'last_login'
+                'last_login',
             )
         }),
     )
