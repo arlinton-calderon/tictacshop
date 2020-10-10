@@ -9,7 +9,7 @@ cd tictacshop
 python3 -m venv venv
 ./venv/Source/activate
 pip install -r requirements.txt
-python tictacshop/manage.py migrate
+python manage.py migrate
 ```
 
 Para Linux.
@@ -19,7 +19,7 @@ cd tictacshop
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
-python tictacshop/manage.py migrate
+python manage.py migrate
 ```
 
 
@@ -28,7 +28,7 @@ python tictacshop/manage.py migrate
 Es necesario crear un usuario administrativo (superuser) para acceder a la pagina de administración de la apliación.
 
 ```
-python tictacshop/manage.py createsuperuser
+python manage.py createsuperuser
 ```
 
 
@@ -37,5 +37,5 @@ python tictacshop/manage.py createsuperuser
 La aplicación se ejecuta en http://localhost:8000 por defecto.
 
 ```
-python tictacshop/manage.py runserver
+python manage.py runserver
 ```
