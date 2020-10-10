@@ -19,6 +19,10 @@ from django.contrib import admin
 from django.urls import include, path
 
 
+admin.site.site_title = settings.ADMIN_SITE_TITLE
+admin.site.site_header = settings.ADMIN_SITE_HEADER
+admin.site.index_title = settings.ADMIN_INDEX_TITLE
+
 urlpatterns = [
     path(settings.ADMIN_URL, admin.site.urls),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

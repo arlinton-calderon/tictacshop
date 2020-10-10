@@ -56,6 +56,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# Application constants
+APP_NAME = 'Tic-Tac Shop'
+
 # URLs
 ROOT_URLCONF = 'config.urls'
 
@@ -149,6 +152,9 @@ MEDIA_URL = '/media/'
 
 # Admin
 ADMIN_URL = 'admin/'
+ADMIN_SITE_TITLE =  f'Administración de {APP_NAME}'
+ADMIN_SITE_HEADER = ADMIN_SITE_TITLE
+ADMIN_INDEX_TITLE = 'Módulo Administrativo'
 ADMINS = [
     ('Arlinton Calderón', 'arlinton_calderon23171@elpoli.edu.co'),
 ]
