@@ -6,11 +6,12 @@ from tictacshop.products.models import Brand, Category, Product, ProductImage
 
 
 class BaseSimpleAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'name', 'created', 'modified')
-    list_editable = ('name',)
+    list_display = ('name', 'created', 'modified')
+    list_display_links = None
+    list_editable = ('name', )
     list_filter = ('created', 'modified')
 
-    search_fields = ('name',)
+    search_fields = ('name', )
     readonly_fields = ('created', 'modified')
 
 
@@ -26,15 +27,15 @@ class CategoryAdmin(BaseSimpleAdmin):
 
 @admin.register(ProductImage)
 class ProductImageAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'image', 'created', 'modified')
-    list_display_links = ('pk', 'image')
+    list_display = ('image', 'created', 'modified')
+    list_display_links = ('image', )
     list_filter = ('created', 'modified')
 
     search_fields = (
         'product__name',
         'product__brand__name',
         'product__categories__name',
-        'image'
+        'image',
     )
 
     readonly_fields = ('created', 'modified')
@@ -48,10 +49,10 @@ class ProductImageInline(admin.StackedInline):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    inlines = (ProductImageInline,)
+    inlines = (ProductImageInline, )
 
-    list_display = ('pk', 'name', 'created', 'modified')
-    list_display_links = ('pk', 'name')
+    list_display = ('name', 'brand', 'price', 'created', 'modified')
+    list_display_links = ('name', )
     list_filter = ('created', 'modified')
 
     search_fields = (

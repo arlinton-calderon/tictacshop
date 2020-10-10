@@ -57,17 +57,19 @@ class CustomUserAdmin(UserAdmin):
     add_form = CustomUserCreationForm
 
     list_display = (
-        'email',
         'username',
+        'email',
         'first_name',
         'last_name',
         'is_staff',
         'is_active',
+        'created',
+        'modified',
     )
 
-    list_filter = ('created', 'modified', 'is_staff')
+    list_filter = ('created', 'modified', 'is_staff', 'is_active', )
 
-    ordering = ('email', )
+    ordering = ('username', )
 
 
 admin.site.register(CustomUser, CustomUserAdmin)
