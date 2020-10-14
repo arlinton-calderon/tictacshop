@@ -1,6 +1,6 @@
 ### Instalación
 
-TicTacShop requiere de [Python](https://www.python.org/downloads/release/python-380/) v3.8+ para ejecutarse.
+TicTacShop requiere de [Python](https://www.python.org/downloads/release/python-380/) v3.8 para ejecutarse.
 
 Para Windows.
 
