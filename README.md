@@ -7,7 +7,7 @@ Para Windows.
 ```
 cd tictacshop
 python3 -m venv venv
-.\venv\Source\activate
+.\venv\Scripts\activate
 pip install -r requirements.txt
 python manage.py migrate
 ```
