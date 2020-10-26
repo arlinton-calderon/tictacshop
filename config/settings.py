@@ -56,7 +56,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# Application constants
+# Application info
 APP_NAME = 'Tic-Tac Shop'
 
 # URLs
@@ -152,7 +152,7 @@ MEDIA_URL = '/media/'
 
 # Admin
 ADMIN_URL = 'admin/'
-ADMIN_SITE_TITLE =  f'Administración de {APP_NAME}'
+ADMIN_SITE_TITLE = f'Administración de {APP_NAME}'
 ADMIN_SITE_HEADER = ADMIN_SITE_TITLE
 ADMIN_INDEX_TITLE = 'Módulo Administrativo'
 ADMINS = [
