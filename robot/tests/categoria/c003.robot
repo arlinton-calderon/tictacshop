@@ -28,21 +28,25 @@ C003 Modificar una categoria.
     sleep   ${LONG DELAY}
     Capture Page Screenshot    pasoC003-4.png
     #paso5 
-    Click Element   xpath=//*[@id="content-main"]/div[2]/table/tbody/tr[1]/td[2]/a
+    Click Element   xpath=//*[@id="content-main"]/div[2]/table/tbody/tr[1]/th/a
     sleep   ${LONG DELAY}
     Capture Page Screenshot    pasoC003-5.png
     #paso6
-    Click Element  xpath=//*[@id="id_form-0-name"]
+    input text  name:q   Camaras
     sleep   ${LONG DELAY}
     Capture Page Screenshot    pasoC003-6.png
     #paso7
-    input text  name:form-0-name  Camaras   clear=True 
+    Click Element  xpath=//*[@id="changelist-search"]/div/input[2]
     sleep   ${LONG DELAY}
     Capture Page Screenshot    pasoC003-7.png
     #paso8
-    Click Element   xpath=//*[@id="changelist-form"]/p/input
+    input text  name:form-0-name  Camaras Modificada   clear=True 
     sleep   ${LONG DELAY}
     Capture Page Screenshot    pasoC003-8.png
+    #paso9
+    Click Element   xpath=//*[@id="changelist-form"]/p/input
+    sleep   ${LONG DELAY}
+    Capture Page Screenshot    pasoC003-9.png
 
 
     [Teardown]  close browser
