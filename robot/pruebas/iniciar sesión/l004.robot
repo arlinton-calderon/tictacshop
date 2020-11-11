@@ -21,7 +21,7 @@ L004 Intentar ingresar como usuario administrativo escribiendo datos inválidos.
     sleep   ${LONG DELAY}
     Capture Page Screenshot     Part_{index}.png
     sleep   ${LONG DELAY}
-    input text  name:password   100
+    input text  name:password   10
     sleep   ${LONG DELAY}
     Capture Page Screenshot     Part_{index}.png
     sleep   ${LONG DELAY}
