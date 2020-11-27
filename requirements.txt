@@ -6,9 +6,3 @@ pycodestyle==2.6.0
 pytz==2020.1
 sqlparse==0.3.1
 toml==0.10.1
-
-# Test requirements
-robotframework==3.2.2
-robotframework-seleniumlibrary==4.5.0
-robotframework-requests==0.7.1
-wxpython==4.1.0
