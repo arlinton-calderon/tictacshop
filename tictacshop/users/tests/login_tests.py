@@ -78,21 +78,21 @@ class LoginTest(TestCase):
             password=password
         )
 
-    def test_login_without_sending_email(self):
+    def test_login_without_submitting_email(self):
         password = type(self).INVALID_PASSWORD
 
         self.login(email=None, password=password)
 
         self.assertIsAnonymousUser()
     
-    def test_login_without_sending_password(self):
+    def test_login_without_submitting_password(self):
         email = type(self).INVALID_EMAIL
 
         self.login(email=email, password=None)
 
         self.assertIsAnonymousUser()
     
-    def test_login_without_seding_credentials(self):
+    def test_login_without_submitting_credentials(self):
         self.login(email=None, password=None)
 
         self.assertIsAnonymousUser()

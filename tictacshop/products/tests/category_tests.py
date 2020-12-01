@@ -11,54 +11,60 @@ from tictacshop.products.models import Category
 class CategoryTest(AbstractAdminTest):
     BASE_URL = f'/{settings.ADMIN_URL}/products/category'
 
-    CATEGORY_NAME = 'Cámaras'
-    CATEGORY_NAME_MODIFIED = 'Cámaras Modificado'
+    NAME = 'Cámaras'
+    NAME_MODIFIED = f'{NAME} Modificado'
 
-    def create_category(self, category_name):
+    def create_category(self, name=None):
+        latest = Category.objects.order_by('created').values('pk').first()
+
         self.client.post(
             f'{type(self).BASE_URL}/add/',
-            {'name': category_name} if category_name else None
+            {'name': name} if name else None
         )
+
+        return Category.objects.filter(pk__gt=latest['pk'] if latest else -1, name=name).first()
 
     def test_create_category(self):
-        category_name = type(self).CATEGORY_NAME
+        name = type(self).NAME
 
-        self.create_category(category_name)
+        category = self.create_category(name)
 
-        self.assertTrue(Category.objects.filter(name=category_name).exists())
+        self.assertIsNotNone(category)
+
+        self.assertEqual(category.name, name)
 
     def test_create_category_with_empty_name(self):
-        self.create_category(None)
+        category = self.create_category()
 
-        self.assertFalse(Category.objects.all().exists())
+        self.assertIsNone(category)
 
     def test_change_category(self):
-        category_old_name = type(self).CATEGORY_NAME
-        category_new_name = type(self).CATEGORY_NAME_MODIFIED
+        old_name = type(self).NAME
+        new_name = type(self).NAME_MODIFIED
 
-        category = Category.objects.create(name=category_old_name)
+        category = self.create_category(name=old_name)
 
-        self.assertEqual(category.pk, 1)
+        self.assertIsNotNone(category)
 
         self.client.post(
-            f'{type(self).BASE_URL}/1/change/',
-            {'name': category_new_name}
+            f'{type(self).BASE_URL}/{category.pk}/change/',
+            {'name': new_name}
         )
 
-        self.assertFalse(Category.objects.filter(name=category_old_name).exists())
+        category = Category.objects.get(pk=category.pk)
 
-        self.assertTrue(Category.objects.filter(name=category_new_name).exists())
+        self.assertEqual(category.name, new_name)
 
     def test_delete_category(self):
-        category_name = type(self).CATEGORY_NAME
+        name = type(self).NAME
 
-        category = Category.objects.create(name=category_name)
+        category = self.create_category(name=name)
 
-        self.assertEqual(category.pk, 1)
+        self.assertIsNotNone(category)
 
         self.client.post(
-            f'{type(self).BASE_URL}/1/delete/',
-            {'name': category_name}
+            f'{type(self).BASE_URL}/{category.pk}/delete/',
+            {'post': 'yes'}
         )
 
-        self.assertFalse(Category.objects.filter(name=category_name).exists())
+        self.assertFalse(Category.objects.filter(pk=category.pk).exists())

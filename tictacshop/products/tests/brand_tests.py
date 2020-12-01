@@ -11,54 +11,60 @@ from tictacshop.products.models import Brand
 class BrandTest(AbstractAdminTest):
     BASE_URL = f'/{settings.ADMIN_URL}/products/brand'
 
-    BRAND_NAME = 'Sony'
-    BRAND_NAME_MODIFIED = 'Sony Modificado'
+    NAME = 'Sony'
+    NAME_MODIFIED = f'{NAME} Modificado'
 
-    def create_brand(self, brand_name):
+    def create_brand(self, name=None):
+        latest = Brand.objects.order_by('created').values('pk').first()
+
         self.client.post(
             f'{type(self).BASE_URL}/add/',
-            {'name': brand_name} if brand_name else None
+            {'name': name} if name else None
         )
+
+        return Brand.objects.filter(pk__gt=latest['pk'] if latest else -1, name=name).first()
 
     def test_create_brand(self):
-        brand_name = type(self).BRAND_NAME
+        name = type(self).NAME
 
-        self.create_brand(brand_name)
+        brand = self.create_brand(name)
 
-        self.assertTrue(Brand.objects.filter(name=brand_name).exists())
+        self.assertIsNotNone(brand)
+
+        self.assertEqual(brand.name, name)
 
     def test_create_brand_with_empty_name(self):
-        self.create_brand(None)
+        brand = self.create_brand()
 
-        self.assertFalse(Brand.objects.all().exists())
+        self.assertIsNone(brand)
 
     def test_change_brand(self):
-        brand_old_name = type(self).BRAND_NAME
-        brand_new_name = type(self).BRAND_NAME_MODIFIED
+        old_name = type(self).NAME
+        new_name = type(self).NAME_MODIFIED
 
-        brand = Brand.objects.create(name=brand_old_name)
+        brand = self.create_brand(name=old_name)
 
-        self.assertEqual(brand.pk, 1)
+        self.assertIsNotNone(brand)
 
         self.client.post(
-            f'{type(self).BASE_URL}/1/change/',
-            {'name': brand_new_name}
+            f'{type(self).BASE_URL}/{brand.pk}/change/',
+            {'name': new_name}
         )
 
-        self.assertFalse(Brand.objects.filter(name=brand_old_name).exists())
+        brand = Brand.objects.get(pk=brand.pk)
 
-        self.assertTrue(Brand.objects.filter(name=brand_new_name).exists())
+        self.assertEqual(brand.name, new_name)
 
     def test_delete_brand(self):
-        brand_name = type(self).BRAND_NAME
+        name = type(self).NAME
 
-        brand = Brand.objects.create(name=brand_name)
+        brand = self.create_brand(name=name)
 
-        self.assertEqual(brand.pk, 1)
+        self.assertIsNotNone(brand)
 
         self.client.post(
-            f'{type(self).BASE_URL}/1/delete/',
-            {'name': brand_name}
+            f'{type(self).BASE_URL}/{brand.pk}/delete/',
+            {'post': 'yes'}
         )
 
-        self.assertFalse(Brand.objects.filter(name=brand_name).exists())
+        self.assertFalse(Brand.objects.filter(pk=brand.pk).exists())
