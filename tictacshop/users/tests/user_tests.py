@@ -91,7 +91,7 @@ class UserTest(AbstractAdminTest):
 
         self.assertIsNotNone(user)
 
-        response = self.client.post(
+        self.client.post(
             f'{type(self).BASE_URL}/{user.pk}/change/',
             {
                 'username': username_modified,
@@ -107,8 +107,6 @@ class UserTest(AbstractAdminTest):
                 'last_login_1': ''
             }
         )
-
-        print(str(response.content, encoding='utf-8'))
 
         user = CustomUser.objects.get(pk=user.pk)
 
