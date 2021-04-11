@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block head_content %}
+    <title>Tic-Tac Shop</title>
+{% endblock %}
+
+{% block container %}
+    {% if not products %}
+        <center>
+            <h4 class="mdc-typography--headline4">No se encontrarón productos.</h4>
+        </center>
+    {% else %}
+        <div class="mdc-layout-grid__inner">
+            {% for product in products %}
+                    <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-6">
+                    <div class="mdc-card" style="width: 350px; margin: 24px 0;">
+                        <div class="mdc-card__primary-action">
+                            {% if product.images.all.exists %}
+                                <div class="mdc-card__media mdc-card__media--16-9" style="margin: 1rem 1rem 0 1rem; background-size: contain; background-repeat: no-repeat; background-image: url(&quot;{{ product.images.all.first.image.url }}&quot;);"></div>
+                            {% endif %}
+                            <div style="padding: 1rem;">
+                                <h2 class="mdc-typography mdc-typography--headline6">{{ product.name }}</h2>
+                                <h3 class="mdc-typography mdc-typography--subtitle2" style="font-size: .875rem; line-height: 1.375rem; font-weight: 500; letter-spacing: .0071428571em; color: var(--mdc-theme-text-secondary-on-background,rgba(0,0,0,.54));">por {{ product.brand.name }}</h3>
+                            </div>
+                            {% if product.description %}
+                                <div class="mdc-typography mdc-typography--body2 line-clamp" style="margin-bottom: .5rem; padding: 0 1rem 0 1rem;">{{ product.description }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="mdc-card__actions">
+                            <div class="mdc-card__action-buttons">
+                                <a class="mdc-button mdc-card__action mdc-card__action--button" href="{% url 'products:detail' product.pk %}"><span class="mdc-button__ripple"></span>Ver detalles</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="mdc-typography--body1 pagination">
+            <span class="step-links">
+                <center>
+                    {% if page_obj.has_previous %}
+                        <a class="mdc-button" href="?page=1">&laquo; Primera</a>
+                        <a class="mdc-button" href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+                    {% endif %}
+
+                    <span class="current">
+                        Pagina {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}
+                    </span>
+
+                    {% if page_obj.has_next %}
+                        <a class="mdc-button" href="?page={{ page_obj.next_page_number }}">Siguiente</a>
+                        <a class="mdc-button" href="?page={{ page_obj.paginator.num_pages }}">Última &raquo;</a>
+                    {% endif %}
+                </center>
+            </span>
+        </div>
+    {% endif %}
+
+    {% load static %}
+    <script type="text/javascript" src="{% static 'js/products/main.js' %}"></script>
+{% endblock %}

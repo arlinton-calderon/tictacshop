@@ -1,0 +1,20 @@
+hr {
+    display: block;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    margin-left: auto;
+    margin-right: auto;
+    border-style: inset;
+    border-width: 1px;
+  }
+
+.line-clamp {
+    box-sizing: border-box;
+    display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    -webkit-box-orient: vertical;
+    -webkit-box-sizing: border-box;
+    -webkit-line-clamp: 4;
+}

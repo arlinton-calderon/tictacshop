@@ -24,6 +24,6 @@ admin.site.site_header = settings.ADMIN_SITE_HEADER
 admin.site.index_title = settings.ADMIN_INDEX_TITLE
 
 urlpatterns = [
-    path('', RedirectView.as_view(url=reverse_lazy('admin:index'))),
+    path('', include(('tictacshop.products.urls', 'tictacshop'), namespace='products')),
     path(f'{settings.ADMIN_URL}/', admin.site.urls),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

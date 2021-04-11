@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block head_content %}
+    <title>{{ product.name }} | Tic-Tac Shop</title>
+{% endblock %}
+
+{% block container %}
+    <h4 class="mdc-typography--headline4">Información del producto</h4>
+    <div style="padding: 24px">
+        <h5 class="mdc-typography--headline5">Marca</h5>
+        <p class="mdc-typography--body1">{{ product.brand.name }}</p>
+        <br/>
+
+        <h5 class="mdc-typography--headline5">Nombre</h5>
+        <p class="mdc-typography--body1">{{ product.name }}</p>
+        <br/>
+        
+        <h5 class="mdc-typography--headline5">Categorias</h5>
+        <div class="mdc-chip-set" role="grid">
+            {% for category in product.categories.all %}
+                <div class="mdc-chip" role="row">
+                    <div class="mdc-chip__ripple"></div>
+                    <span role="gridcell">
+                        <span 
+                            role="button"
+                            {% if foorloop.count == 0 %} tabindex="0" {% endif %}
+                            class="mdc-chip__primary-action">
+                            <span class="mdc-chip__text">{{ category.name }}</span>
+                        </span>
+                    </span>
+                </div>
+            {% endfor %}
+        </div>
+        <br/>
+
+        <h5 class="mdc-typography--headline5">Precio</h5>
+        <p class="mdc-typography--body1">$ {{ product.price }} COP</p>
+        <br/>
+
+        <h5 class="mdc-typography--headline5">Descripción</h5>
+        <div class="mdc-typography--body1">
+            {% if product.description %}
+                <p style="max-height: 256px: overflow-y: auto;">{{ product.description }}</p >
+            {% else %}
+                <p style="font-style: italic;">Sin descripción.</p >
+            {% endif %}
+        </div>
+    </div>
+
+    <hr/>
+
+    {% if product.images.all.exists %}
+        {% load static %}
+        <h4 class="mdc-typography--headline4">Imágenes del producto</h4>
+        <ul class="mdc-image-list mdc-image-list--masonry" style="padding: 24px;">
+            {% for product_image in product.images.all %}
+                <li class="mdc-image-list__item">
+                    <img
+                        class="mdc-image-list__image"
+                        src="{{ product_image.image.url }}"
+                        style="width: 256px; height: 256px; object-fit: contain;" />
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}
